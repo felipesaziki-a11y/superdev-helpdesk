@@ -14,3 +14,5 @@ SessionLocal = sessionmaker(
 
 class Base(DeclarativeBase):
     pass
+
+# py -c "import app.models as m; print(sorted(m.Base.metadata.tables))"
