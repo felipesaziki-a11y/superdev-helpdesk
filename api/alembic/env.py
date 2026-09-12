@@ -1,11 +1,23 @@
 from app.core.config import settings
-from app.models import Base
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+
+import sys
+import os
+
+# ajuste o path se necessário para o Alembic achar seu pacote "app"
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from app.core.database import Base
+# importar app.models garante que Usuario e Categoria sejam
+# registrados no Base.metadata (via app/models/__init__.py)
+from app import models  # noqa: F401
+
+target_metadata = Base.metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -17,12 +29,6 @@ config.set_main_option("sqlalchemy.url", settings.database_url)
 # This line sets up loggers basically.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
