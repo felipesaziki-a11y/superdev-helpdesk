@@ -14,4 +14,4 @@ class CategoriaRepository(RepositorioBase[Categoria]):
         return self.db.scalar(select(Categoria).where(Categoria.nome == nome))
 
     def listar_todos(self):
-        return list(self.db.scalars(select(Categoria).where(Categoria.ativo == True)).all())
+        return list(self.db.scalars(select(Categoria).where(Categoria.ativa == True)).all())
