@@ -33,6 +33,5 @@ class CategoriaResposta(BaseModel):
     id: int
     nome: str
     descricao: str | None
-    ativa: bool
 
     model_config = ConfigDict(from_attributes=True)

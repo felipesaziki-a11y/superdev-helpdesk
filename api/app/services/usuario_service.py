@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
 
-from app.core.exception import ConflitoError, NaoEncontradoError
+from app.core.exceptions import ConflitoError, NaoEncontradoError
 from app.core.security import hash_senha
 from app.models.usuario import Usuario
 from app.repositories.usuario_repository import UsuarioRepository
 from app.schemas.usuario_schema import UsuarioCriar, UsuarioEditar
-
 
 class UsuarioService:
     def __init__(self, db: Session):
@@ -15,12 +14,13 @@ class UsuarioService:
     def criar(self, dado: UsuarioCriar) -> Usuario:
         if self.usuario_repository.consultar_por_email(dado.email) is not None:
             raise ConflitoError(f"E-mail '{dado.email}' já cadastrado")
+
         usuario = Usuario(
             nome=dado.nome,
             email=dado.email,
-            senha=dado.senha,
+            senha_hash=hash_senha(dado.senha),
             papel=dado.papel,
-            ativo=True,
+            ativo=True
         )
         self.usuario_repository.adicionar(usuario)
         self.db.commit()
@@ -51,7 +51,10 @@ class UsuarioService:
 
         return usuario
 
+
     def apagar(self, id: int) -> Usuario:
+        """Soft delete: marca `ativo=False`. O registro continua no 
+        banco para manter histórico"""
         usuario = self.usuario_repository.obter_por_id(id)
 
         if usuario is None:
