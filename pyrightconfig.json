@@ -1,6 +1,11 @@
 {
   "executionEnvironments": [
-    { "root": "api" }
+    {
+        "root": "api",
+        "extraPaths": [
+            "./api/env/Lib/site-packages"
+        ]
+    }
   ],
   "exclude": ["**/node_modules", "**/.venv", "api-spring", "web", "planejamento", "help-desk"]
 }
