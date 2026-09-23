@@ -1,0 +1,33 @@
+<h1>Tickets</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Solicitante</th>
+            <th>Título</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>20260923-00001</th>
+            <th>Patrícia</th>
+            <th>Notebook sem adesivos</th>
+            <th>ALTA</th>
+            <th>Em Análise</th>
+            <th>
+                <button>Definir Prioridade</button>
+                <button>Associar</button>
+                <button>Resolver</button>
+                <button>Cancelar</button>
+            </th>
+        </tr>
+    </tbody>
+</table>
+
+@for(ticket of tickets(); track ticket.id){
+    <div>{{ticket.id}} {{ticket.titulo}}</div>
+}
